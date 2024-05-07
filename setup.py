@@ -45,6 +45,20 @@ extensions = [
         library_dirs=[lib_path_npyrandom,lib_path_npymath],
         libraries=['npyrandom','npymath','m'],
     ), 
+    Extension(
+        "goodpoints.epanechnikovc", [join("goodpoints","epanechnikovc.pyx")],
+        extra_compile_args=['-O3'],
+        language="c", include_dirs=[numpy.get_include()],
+        library_dirs=[lib_path_npyrandom,lib_path_npymath],
+        libraries=['npyrandom','npymath','m'],
+    ), 
+    Extension(
+        "goodpoints.loss_gaussianc", [join("goodpoints","loss_gaussianc.pyx")],
+        extra_compile_args=['-O3'],
+        language="c", include_dirs=[numpy.get_include()],
+        library_dirs=[lib_path_npyrandom,lib_path_npymath],
+        libraries=['npyrandom','npymath','m'],
+    ), 
 ]
 
 # Path to Cython declaration (PXD) files 
