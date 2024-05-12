@@ -31,9 +31,13 @@ from goodpoints.sobolevc cimport (sobolev_kernel_two_points,
 from goodpoints.gaussianc cimport (gaussian_kernel_two_points, 
                                   gaussian_kernel_one_point)
 from goodpoints.epanechnikovc cimport (epanechnikov_kernel_two_points,
-                                       epanechnikov_kernel_one_point)
+                                       epanechnikov_kernel_one_point,
+                                       loss_epanechnikov_kernel_two_points,
+                                       loss_epanechnikov_kernel_one_point)
 from goodpoints.loss_gaussianc cimport (loss_gaussian_kernel_two_points,
-                                       loss_gaussian_kernel_one_point)
+                                       loss_gaussian_kernel_one_point,
+                                       prod_gaussian_kernel_two_points,
+                                       prod_gaussian_kernel_one_point,)
 
 '''
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Compress Functionality %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,9 +88,15 @@ cpdef void compute_K(const double[:, :] X,
     elif strcmp(kernel_type, b"epanechnikov") == 0:
         k = epanechnikov_kernel_two_points 
         kdiag = epanechnikov_kernel_one_point
+    elif strcmp(kernel_type, b"loss_epanechnikov") == 0:
+        k = loss_epanechnikov_kernel_two_points 
+        kdiag = loss_epanechnikov_kernel_one_point
     elif strcmp(kernel_type, b"loss_gaussian") == 0:
         k = loss_gaussian_kernel_two_points 
         kdiag = loss_gaussian_kernel_one_point
+    elif strcmp(kernel_type, b"prod_gaussian") == 0:
+        k = prod_gaussian_kernel_two_points 
+        kdiag = prod_gaussian_kernel_one_point
 
     # Populate kernel matrix using these kernel functions
     _compute_K(X, input_indices, k, kdiag, k_params, K)
@@ -396,9 +406,15 @@ cpdef void compress(const double[:, :] X,
     elif strcmp(kernel_type, b"epanechnikov") == 0:
         k = epanechnikov_kernel_two_points 
         kdiag = epanechnikov_kernel_one_point
+    elif strcmp(kernel_type, b"loss_epanechnikov") == 0:
+        k = loss_epanechnikov_kernel_two_points 
+        kdiag = loss_epanechnikov_kernel_one_point
     elif strcmp(kernel_type, b"loss_gaussian") == 0:
         k = loss_gaussian_kernel_two_points 
         kdiag = loss_gaussian_kernel_one_point
+    elif strcmp(kernel_type, b"prod_gaussian") == 0:
+        k = prod_gaussian_kernel_two_points 
+        kdiag = prod_gaussian_kernel_one_point
     
     # Compress each bin
     # Keep track of current bin's starting index into output indices
