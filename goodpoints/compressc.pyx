@@ -38,6 +38,12 @@ from goodpoints.loss_gaussianc cimport (loss_gaussian_kernel_two_points,
                                        loss_gaussian_kernel_one_point,
                                        prod_gaussian_kernel_two_points,
                                        prod_gaussian_kernel_one_point,)
+from goodpoints.laplacec cimport (laplace_kernel_two_points, 
+                                  laplace_kernel_one_point)
+from goodpoints.loss_laplacec cimport (loss_laplace_kernel_two_points,
+                                       loss_laplace_kernel_one_point,
+                                       prod_laplace_kernel_two_points,
+                                       prod_laplace_kernel_one_point,)
 
 '''
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Compress Functionality %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,6 +103,15 @@ cpdef void compute_K(const double[:, :] X,
     elif strcmp(kernel_type, b"prod_gaussian") == 0:
         k = prod_gaussian_kernel_two_points 
         kdiag = prod_gaussian_kernel_one_point
+    elif strcmp(kernel_type, b"laplace") == 0:
+        k = laplace_kernel_two_points 
+        kdiag = laplace_kernel_one_point
+    elif strcmp(kernel_type, b"loss_laplace") == 0:
+        k = loss_laplace_kernel_two_points 
+        kdiag = loss_laplace_kernel_one_point
+    elif strcmp(kernel_type, b"prod_laplace") == 0:
+        k = prod_laplace_kernel_two_points 
+        kdiag = prod_laplace_kernel_one_point
 
     # Populate kernel matrix using these kernel functions
     _compute_K(X, input_indices, k, kdiag, k_params, K)
@@ -415,6 +430,15 @@ cpdef void compress(const double[:, :] X,
     elif strcmp(kernel_type, b"prod_gaussian") == 0:
         k = prod_gaussian_kernel_two_points 
         kdiag = prod_gaussian_kernel_one_point
+    elif strcmp(kernel_type, b"laplace") == 0:
+        k = laplace_kernel_two_points 
+        kdiag = laplace_kernel_one_point
+    elif strcmp(kernel_type, b"loss_laplace") == 0:
+        k = loss_laplace_kernel_two_points 
+        kdiag = loss_laplace_kernel_one_point
+    elif strcmp(kernel_type, b"prod_laplace") == 0:
+        k = prod_laplace_kernel_two_points 
+        kdiag = prod_laplace_kernel_one_point
     
     # Compress each bin
     # Keep track of current bin's starting index into output indices
