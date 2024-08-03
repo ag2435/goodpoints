@@ -18,6 +18,7 @@ np.import_array()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Epanechnikov Kernel Functionality %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 '''
 cdef double NORMALIZATION = 0.75
+cdef double DUMMY_SCALING = 1
 
 @cython.boundscheck(False) # turn off bounds-checking for this function
 @cython.wraparound(False)  # turn off negative index wrapping for this function
@@ -56,6 +57,9 @@ cdef double epanechnikov_kernel_two_points(const double[:] X1,
 
     # Compute the base Epanenchnikov kernel
     result = NORMALIZATION * (1-arg1/sig_sqd) * (arg1 <= sig_sqd)
+    # Experiment: scale base kernel k(x1,x2) by const >> 1
+    # to see if we can beat the square loss kernel
+    result *= DUMMY_SCALING
 
     if product:
         # compute the linear kernel
@@ -94,6 +98,9 @@ cdef double epanechnikov_kernel_one_point(const double[:] X1,
     cdef double arg, result 
     
     result = NORMALIZATION
+    # Experiment: scale base kernel k(x1,x2) by const >> 1
+    # to see if we can beat the square loss kernel
+    result *= DUMMY_SCALING
 
     if product:
         # Compute the linear kernel
@@ -141,6 +148,9 @@ cdef double loss_epanechnikov_kernel_two_points(const double[:] X1,
 
     # Compute the base Epanenchnikov kernel
     result = NORMALIZATION * (1-arg1/sig_sqd) * (arg1 <= sig_sqd)
+    # Experiment: scale base kernel k(x1,x2) by const >> 1
+    # to see if we can beat the square loss kernel
+    result *= DUMMY_SCALING
 
     # compute the linear kernel
     arg2 = 0
@@ -178,6 +188,9 @@ cdef double loss_epanechnikov_kernel_one_point(const double[:] X1,
     cdef double arg, result 
     
     result = NORMALIZATION
+    # Experiment: scale base kernel k(x1,x2) by const >> 1
+    # to see if we can beat the square loss kernel
+    result *= DUMMY_SCALING
 
     # Compute the linear kernel
     arg = 0
